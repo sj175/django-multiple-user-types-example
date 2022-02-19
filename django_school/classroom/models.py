@@ -4,11 +4,13 @@ from django.utils.html import escape, mark_safe
 
 
 class User(AbstractUser):
+    id = models.AutoField(primary_key=True)
     is_student = models.BooleanField(default=False)
     is_teacher = models.BooleanField(default=False)
 
 
 class Subject(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=30)
     color = models.CharField(max_length=7, default='#007bff')
 
@@ -23,6 +25,7 @@ class Subject(models.Model):
 
 
 class Quiz(models.Model):
+    id = models.AutoField(primary_key=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='quizzes')
     name = models.CharField(max_length=255)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name='quizzes')
@@ -32,6 +35,7 @@ class Quiz(models.Model):
 
 
 class Question(models.Model):
+    id = models.AutoField(primary_key=True)
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name='questions')
     text = models.CharField('Question', max_length=255)
 
@@ -40,6 +44,7 @@ class Question(models.Model):
 
 
 class Answer(models.Model):
+    id = models.AutoField(primary_key=True)
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='answers')
     text = models.CharField('Answer', max_length=255)
     is_correct = models.BooleanField('Correct answer', default=False)
@@ -65,6 +70,7 @@ class Student(models.Model):
 
 
 class TakenQuiz(models.Model):
+    id = models.AutoField(primary_key=True)
     student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='taken_quizzes')
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name='taken_quizzes')
     score = models.FloatField()
@@ -72,5 +78,6 @@ class TakenQuiz(models.Model):
 
 
 class StudentAnswer(models.Model):
+    id = models.AutoField(primary_key=True)
     student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='quiz_answers')
     answer = models.ForeignKey(Answer, on_delete=models.CASCADE, related_name='+')
