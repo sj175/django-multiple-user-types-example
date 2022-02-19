@@ -13,3 +13,6 @@ local_settings.py
 # mypy
 .mypy_cache/
 
+# DB
+*.sqlite3
+
